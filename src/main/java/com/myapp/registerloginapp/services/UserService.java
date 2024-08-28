@@ -5,4 +5,6 @@ import com.myapp.registerloginapp.dtos.responses.RegistrationResponse;
 
 public interface UserService {
     RegistrationResponse registerUser(RegistrationRequests request);
+
+    Long getNumberOfUsers();
 }

@@ -26,4 +26,9 @@ public class UserServiceImpl implements UserService {
         response.setMessage("User registered successfully");
         return response;
     }
+
+    @Override
+    public Long getNumberOfUsers() {
+        return userRepository.count();
+    }
 }
