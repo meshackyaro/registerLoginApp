@@ -9,6 +9,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -16,4 +17,5 @@ public class User {
     private String username;
     private String password;
     private boolean isLoggedIn = false;
+
 }

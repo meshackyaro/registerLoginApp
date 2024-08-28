@@ -16,6 +16,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public RegistrationResponse registerUser(RegistrationRequests request) {
+
         User foundUser = new User();
         if (foundUser.getUsername() != null) throw new UserAlreadyExistException("user already exist");
         foundUser.setUsername(request.getUsername());
@@ -25,10 +26,13 @@ public class UserServiceImpl implements UserService {
         RegistrationResponse response = new RegistrationResponse();
         response.setMessage("User registered successfully");
         return response;
+
     }
 
     @Override
     public Long getNumberOfUsers() {
         return userRepository.count();
+
     }
+
 }

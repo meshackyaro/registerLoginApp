@@ -7,4 +7,5 @@ public interface UserService {
     RegistrationResponse registerUser(RegistrationRequests request);
 
     Long getNumberOfUsers();
+
 }
