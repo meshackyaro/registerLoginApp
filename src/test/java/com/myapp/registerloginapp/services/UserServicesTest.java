@@ -5,11 +5,11 @@ import com.myapp.registerloginapp.dtos.responses.RegistrationResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 public class UserServicesTest {
+
     @Autowired
     private UserService userService;
 
@@ -21,5 +21,7 @@ public class UserServicesTest {
         RegistrationResponse response = userService.registerUser(request);
         assertThat(response).isNotNull();
         assertThat(userService.getNumberOfUsers()).isEqualTo(1L);
+
     }
+
 }
