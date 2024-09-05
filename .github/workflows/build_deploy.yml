@@ -44,30 +44,30 @@ jobs:
       - name: Deploy Docker Container on AWS
         uses: appleboy/ssh-action@master
         with:
-            host: ${{ secrets.AWS_HOST }}      # Your AWS instance IP from secrets
-            username: ${{ secrets.AWS_USER }}  # SSH username from secrets
-            key: ${{ secrets.AWS_KEY }}        # SSH private key from secrets
-            port: 22                           # SSH port (default 22)
-            script: |
-              if ! command -v docker &> /dev/null; then
-                    echo "Docker not found. Installing Docker..."
-                    curl -fsSL https://get.docker.com -o get-docker.sh
-                    sudo sh get-docker.sh
-                  else
-                    echo "Docker is already installed."
-                  fi
+          host: ${{ secrets.AWS_HOST }}      # Your AWS instance IP from secrets
+          username: ${{ secrets.AWS_USER }}  # SSH username from secrets
+          key: ${{ secrets.AWS_KEY }}        # SSH private key from secrets
+          port: 22                           # SSH port (default 22)
+          script: |
+            if ! command -v docker &> /dev/null; then
+              echo "Docker not found. Installing Docker..."
+              curl -fsSL https://get.docker.com -o get-docker.sh
+              sudo sh get-docker.sh
+            else
+              echo "Docker is already installed."
+            fi
               echo "Pulling latest Docker image from Docker Hub..."
               sudo docker pull meshackyaro/registerloginapp:latest
               
-              if [ $(docker ps -q -f name=devop-container) ]; then
-                echo "Stopping existing container..."
-                sudo docker stop devop-container
-                sudo docker rm devop-container
+            if [ $(docker ps -q -f name=devop-container) ]; then
+              echo "Stopping existing container..."
+              sudo docker stop devop-container
+              sudo docker rm devop-container
               
-              else
-                echo "No existing container found, creating a new one..."
+            else
+              echo "No existing container found, creating a new one..."
               
-              fi
+            fi
               
               echo "Running the new container..."
               sudo docker run -d -p 8084:8084 --name devop-container meshackyaro/registerloginapp:latest
