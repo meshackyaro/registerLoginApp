@@ -40,3 +40,31 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: docker push meshackyaro/registerloginapp:latest
+
+      - name: Deploy Docker Container on AWS
+        uses: appleboy/ssh-action@master
+        with:
+            host: ${{ secrets.AWS_HOST }}      # Your AWS instance IP from secrets
+            username: ${{ secrets.AWS_USER }}  # SSH username from secrets
+            key: ${{ secrets.AWS_KEY }}        # SSH private key from secrets
+            port: 22                           # SSH port (default 22)
+            script: |
+              echo "Pulling latest Docker image from Docker Hub..."
+              sudo docker pull meshackyaro/registerloginapp:latest
+              
+              if [ $(docker ps -q -f name=devop-container) ]; then
+                echo "Stopping existing container..."
+                sudo docker stop devop-container
+                sudo docker rm devop-container
+              
+              else
+                echo "No existing container found, creating a new one..."
+              
+              fi
+              
+              echo "Running the new container..."
+              sudo docker run -d -p 8084:8084 --name devop-container meshackyaro/registerloginapp:latest
+              echo "Container deployed successfully!"
+              
+              echo "Listing running containers..."
+              sudo docker ps
